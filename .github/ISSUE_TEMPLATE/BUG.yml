@@ -14,24 +14,40 @@ body:
     attributes:
       label: What happened?
       description:
-        Please include what you were trying to accomplish, and what happened
-        instead.
+        Please include a concise summary of the problem and what you were trying to accomplish.
     validations:
       required: true
-  - type: input
-    id: env
+  - type: textarea
+    id: expected-behavior
     attributes:
-      label: Environment
+      label: Expected behavior
       description:
-        What browser and operating system are you seeing this issue on? What
-        versions?
-      placeholder: Chrome 99.0.4844.51 on macOS 12.2.1
-  - type: input
+        What did you expect to happen instead of the current behavior?
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual behavior
+      description:
+        What happened instead? Please include any error messages, console output, or relevant symptoms.
+    validations:
+      required: true
+  - type: textarea
     id: repro
     attributes:
       label: Reproduction
       description:
-        Please include a link to a runnable reproduction, if you can. This will
-        greatly increase the likelihood we are able to help. A Glitch or
-        CodeSandbox link is perfect.
+        Please include a minimal reproduction, steps to reproduce, or a link to a runnable example such as a Glitch or CodeSandbox project.
       placeholder: https://glitch.com/edit/#!/your-project
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description:
+        What browser and operating system are you seeing this issue on? What versions of React, Stripe.js, and this package are involved?
+      placeholder: Chrome 99.0.4844.51 on macOS 12.2.1; React 18.2.0; @stripe/react-stripe-js 2.1.0
+    validations:
+      required: true
