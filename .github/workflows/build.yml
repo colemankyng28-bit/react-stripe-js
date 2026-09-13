@@ -34,8 +34,25 @@ jobs:
     - run: yarn install --frozen-lockfile
     - name: Pin @stripe/stripe-js to declared peer floor
       run: |
-        FLOOR=$(node -p "require('./package.json').peerDependencies['@stripe/stripe-js'].match(/>=\s*([0-9]+\.[0-9]+\.[0-9]+)/)[1]")
+        FLOOR=$(node -p "require('./package.json').peerDependencies['@stripe/stripe-js'].match(/>=\s*([0-9]+\.[0-9]+\.[0-9]+)/)[1])
         echo "Typechecking against @stripe/stripe-js@$FLOOR"
         yarn add --dev --exact "@stripe/stripe-js@$FLOOR"
     - run: yarn run typecheck
     - run: yarn run build
+  link-elements:
+    # Test the project against the latest compatible @stripe/stripe-js to
+    # ensure Link Elements APIs/types are supported by CI.
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24.x
+    - run: yarn install --frozen-lockfile
+    - name: Install latest compatible @stripe/stripe-js
+      run: |
+        echo "Installing latest @stripe/stripe-js@^9.16.0 for Link Elements checks"
+        yarn add --dev --exact "@stripe/stripe-js@^9.16.0"
+    - run: yarn run typecheck
+    - run: yarn run build
+    - run: yarn run test:unit
